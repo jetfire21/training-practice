@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+<style>
+	.slider{position: relative; height: 300px;} 
+	.slider-wrap{ position: absolute; }
+	.slider-wrap img{ position: absolute; top:40px;opacity: 0; /*height:350px; width: 350px;*/ }
+	.slider-wrap img.show{opacity: 1;}
+	/*.prev, .next {}*/
+</style>
+</head>
+<body>
+
+	<div class="slider sl-1">
+		<div class="slider-wrap">
+			<img src="https://dummyimage.com/300x200/000/fff&text=1" alt="" class="show">
+			<img src="https://dummyimage.com/300x200/000/fff&text=2" alt="">
+			<img src="https://dummyimage.com/300x200/000/fff&text=3" alt="">
+			<img src="https://dummyimage.com/300x200/000/fff&text=4" alt="">
+		</div>
+		<button class="prev">prev</button>
+		<button class="next">next</button>
+	</div>
+
+	<div class="slider sl-2">
+		<div class="slider-wrap">
+			<img src="1.jpg" alt="" class="show">
+			<img src="2.jpg" alt="">
+			<img src="3.jpg" alt="">
+			<img src="4.jpg" alt="">
+		</div>
+		<button class="prev">prev</button>
+		<button class="next">next</button>
+	</div>
+
+<script>
+/* **** слайдер без ооп и с ооп на чистом js **** */
+	window.onload = function(){
+
+		console.log('------start----');
+		// var images = document.querySelectorAll(".slider-wrap img");
+		// // console.log(images);
+		// var prev = document.querySelector(".prev");
+		// var next = document.querySelector(".next");
+		// var i = 0;
+		// next.onclick = function(){
+		// 	images[i].classList.remove("show");
+		// 	i++;
+		// 	if( i >= images.length ) i=0;
+		// 	console.log(i);
+		// 	console.log(images[i]);
+		// 	images[i].classList.add("show");
+
+		// }		
+		// prev.onclick = function(){
+		// 	images[i].classList.remove("show");
+		// 	// images[i].classList.add("hide");
+		// 	i--;
+		// 	if( i < 0 ) i=images.length-1;
+		// 	console.log(i);
+		// 	console.log(images[i]);
+		// 				images[i].classList.add("show");
+
+		// }
+		// console.log('---end--'+i);
+
+		/************** class oop *****************/
+
+		function Slider(images,next,prev,automove){
+
+			this.automove = automove;
+			this.images = images;
+			this.next = next;
+			this.prev = prev;
+			console.log(images);
+
+				var i = 0;
+				next.onclick = function (){
+					clearInterval(int); // stop autoplay
+					go_next();
+				};
+
+				function go_next(){
+					images[i].classList.remove("show");
+					i++;
+					if( i >= images.length ) i=0;
+					console.log(i);
+					console.log(images[i]);
+					images[i].classList.add("show");
+				}	
+
+				prev.onclick = function(){
+					clearInterval(int); // stop autoplay
+					images[i].classList.remove("show");
+					i--;
+					if( i < 0 ) i=images.length-1;
+					console.log(i);
+					console.log(images[i]);
+					images[i].classList.add("show");
+
+				}	
+
+				if (automove){
+					var int = setInterval(function() {
+						console.log('interval');
+						// images[i].classList.remove("show");
+						// i++;
+						// if( i >= images.length ) i=0;
+						// console.log(i);
+						// console.log(images[i]);
+						// images[i].classList.add("show");
+						go_next();
+
+						}, 2000);
+				}
+		}
+		var images = document.querySelectorAll(".sl-1 img");
+		// console.log(images);
+		var prev = document.querySelector(".sl-1 .prev");
+		var next = document.querySelector(".sl-1 .next");
+
+		var images2 = document.querySelectorAll(".sl-2 img");
+		// console.log(images);
+		var prev2 = document.querySelector(".sl-2 .prev");
+		var next2 = document.querySelector(".sl-2 .next");
+
+		var sl = new Slider(images,next,prev,true);
+		var sl2 = new Slider(images2,next2,prev2);
+
+		/************** class oop *****************/
+
+	}
+	// a();
+</script>
+</body>
+</html>
